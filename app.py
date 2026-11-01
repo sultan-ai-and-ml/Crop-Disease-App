@@ -56,13 +56,13 @@ if uploaded_file is not None:
 # Check if the AI is confident enough
       if confidence < 85.0:
              st.error("⚠️ Image not recognized. Please upload a clear, close-up photo of a plant leaf.")
-     else:
+      else:
     # Format output
-    clean_name = predicted_class.replace('___', ' - ').replace('_', ' ')
-    advice = advisory_db.get(predicted_class, "Please consult your local agricultural extension office.")
+      clean_name = predicted_class.replace('___', ' - ').replace('_', ' ')
+      advice = advisory_db.get(predicted_class, "Please consult your local agricultural extension office.")
     
     # Display results
-    st.success(f"**Diagnosis:** {clean_name}")
-    st.info(f"**Confidence:** {confidence:.2f}%")
-    st.subheader("👨‍🌾 Agricultural Advisory:")
-    st.write(advice)
+      st.success(f"**Diagnosis:** {clean_name}")
+      st.info(f"**Confidence:** {confidence:.2f}%")
+      st.subheader("👨‍🌾 Agricultural Advisory:")
+      st.write(advice)
