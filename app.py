@@ -29,7 +29,26 @@ advisory_db = {
 }
 
 # 4. UI: File Uploader
-uploaded_file = st.file_uploader("Choose a leaf image...", type=["jpg", "jpeg", "png"])
+st.markdown("### 📸 Upload a Leaf Image")
+uploaded_file = st.file_uploader(
+    label="Upload a clear, close-up photo of the affected leaf.", 
+    type=["jpg", "jpeg", "png"],
+    help="For best results, ensure the leaf is clearly visible and well-lit. Maximum file size: 5MB.",
+    label_visibility="visible" 
+)
+
+if uploaded_file is not None:
+    # Display the uploaded image
+    image = Image.open(uploaded_file)
+    st.image(image, caption='Uploaded Image', use_container_width=True)
+    
+   # 4. UI: File Uploader
+st.markdown("### 📸 Upload a Leaf Image")
+uploaded_file = st.file_uploader(
+    label="Upload a clear, close-up photo of the affected leaf.", 
+    type=["jpg", "jpeg", "png"],
+    help="For best results, ensure the leaf is clearly visible and well-lit."
+)
 
 if uploaded_file is not None:
     # Display the uploaded image
@@ -52,13 +71,14 @@ if uploaded_file is not None:
         predicted_class = class_names[np.argmax(predictions)]
         confidence = np.max(predictions) * 100
         
-        # Check if the AI is confident enough (Threshold set to 85%)
-        if confidence < 85.0:
-            st.error("⚠️ Image not recognized. Please upload a clear, close-up photo of a plant leaf.")
+        # --- THE PROFESSIONAL FILTER ---
+        # If the AI is less than 80% sure, it rejects the image.
+        if confidence < 80.0:
+            st.error("🚫 **Image Rejected:** This does not look like a plant leaf. Please upload a valid, clear photo of a leaf.")
         else:
             # Format output
             clean_name = predicted_class.replace('___', ' - ').replace('_', ' ')
-            advice = advisory_db.get(predicted_class, "Please consult your local agricultural extension office.")
+            advice = advisory_db.get(predicted_class, "Please consult your local agricultural extension office for treatment.")
             
             # Display results
             st.success(f"**Diagnosis:** {clean_name}")
