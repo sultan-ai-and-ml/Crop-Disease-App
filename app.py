@@ -58,7 +58,7 @@ if uploaded_file is not None:
         confidence = np.max(predictions) * 100
         
         # Check if the AI is confident enough (Threshold set to 80%)
-        if confidence < 80.0:
+        if confidence < 90.0:
             st.error("🚫 **Image Rejected:** This does not look like a plant leaf. Please upload a valid, clear photo of a leaf.")
         else:
             # Format output
