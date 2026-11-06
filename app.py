@@ -29,7 +29,23 @@ advisory_db = {
 }
 
 # 4. UI: File Uploader (SINGLE CLEAN VERSION)
-st.markdown("### 📸 Upload a Leaf Image")
+st.markdown(
+    """
+    <style>
+    /* Hides the "200MB per file" text */
+    [data-testid="stFileUploaderDropzoneInstructions"] > div > span {
+        display: none;
+    }
+    /* Changes the text to something professional */
+    [data-testid="stFileUploaderDropzoneInstructions"] > div::after {
+        content: "Max size: 10MB";
+        font-size: 14px;
+        color: #888;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 uploaded_file = st.file_uploader(
     label="Upload a clear, close-up photo of the affected leaf.", 
     type=["jpg", "jpeg", "png"],
