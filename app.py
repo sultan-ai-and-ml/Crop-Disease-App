@@ -28,21 +28,7 @@ advisory_db = {
     "Potato___Early_blight": "Apply a protective fungicide. Avoid wetting the leaves.",
 }
 
-# 4. UI: File Uploader
-st.markdown("### 📸 Upload a Leaf Image")
-uploaded_file = st.file_uploader(
-    label="Upload a clear, close-up photo of the affected leaf.", 
-    type=["jpg", "jpeg", "png"],
-    help="For best results, ensure the leaf is clearly visible and well-lit. Maximum file size: 5MB.",
-    label_visibility="visible" 
-)
-
-if uploaded_file is not None:
-    # Display the uploaded image
-    image = Image.open(uploaded_file)
-    st.image(image, caption='Uploaded Image', use_container_width=True)
-    
-   # 4. UI: File Uploader
+# 4. UI: File Uploader (SINGLE CLEAN VERSION)
 st.markdown("### 📸 Upload a Leaf Image")
 uploaded_file = st.file_uploader(
     label="Upload a clear, close-up photo of the affected leaf.", 
@@ -71,8 +57,7 @@ if uploaded_file is not None:
         predicted_class = class_names[np.argmax(predictions)]
         confidence = np.max(predictions) * 100
         
-        # --- THE PROFESSIONAL FILTER ---
-        # If the AI is less than 80% sure, it rejects the image.
+        # Check if the AI is confident enough (Threshold set to 80%)
         if confidence < 80.0:
             st.error("🚫 **Image Rejected:** This does not look like a plant leaf. Please upload a valid, clear photo of a leaf.")
         else:
